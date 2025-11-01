@@ -1,5 +1,4 @@
-﻿# This function reads Apache web server log files, parses each log entry into structured data, filters for internal
-# network traffic, and displays the results in a formatted table. 
+﻿# Funciton that parses Apache log files and filters for internal network traffic (and when called outputs it into a table)
 
 function ApacheLogs(){
     $logsNotFormatted = Get-Content C:\xampp\apache\logs\access.log
