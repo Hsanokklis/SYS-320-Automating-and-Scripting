@@ -1,5 +1,5 @@
 ﻿# Dot source the function
-. C:\Users\champuser\SYS-320-Automating-and-Scripting\week4_5\apache-logs.ps1
+. C:\Users\champuser\SYS-320-Automating-and-Scripting\week4_5\apache-log.ps1
 
 # Get user input
 $page = Read-Host "Enter the page visited (index.html,page1.html,pag2.html,page3.html)"
