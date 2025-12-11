@@ -1,4 +1,4 @@
-﻿. (Join-Path $PSScriptRoot String-Helper.ps1)
+﻿. "C:\Users\champuser\SYS-320-Automating-and-Scripting\week7\String-Helper.ps1"
 
 
 <# ******************************
@@ -46,10 +46,10 @@ function getFailedLogins($timeBack){
     $account=""
     $domain="" 
 
-    $usrlines = getMatchingLines $failedlogins[$i].Message "Account Name"
+    $usrlines = getMatchingLines $failedlogins[$i].Message "*Account Name*"
     $usr = $usrlines[1].Split(":")[1].trim()
 
-    $dmnlines = getMatchingLines $failedlogins[$i].Message "Account Domain"
+    $dmnlines = getMatchingLines $failedlogins[$i].Message "*Account Domain*"
     $dmn = $dmnlines[1].Split(":")[1].trim()
 
     $user = $dmn+"\"+$usr;
@@ -64,3 +64,15 @@ function getFailedLogins($timeBack){
 
     return $failedloginsTable
 } # End of function getFailedLogins
+
+function atRiskUsers($days) {
+    # Get all failed logins
+    $failedLogins = getFailedLogins $days
+    
+    # Group by user and filter users with more than 10 failed attempts
+    $atRiskUsers = $failedLogins | Group-Object -Property User | Where-Object { $_.Count -gt 10 }
+    
+    # Return the at-risk users with their names
+    return $atRiskUsers | Select-Object -ExpandProperty Name
+}
+

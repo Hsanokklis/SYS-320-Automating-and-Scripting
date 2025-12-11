@@ -12,5 +12,5 @@ Send-MailMessage -From $From -To $To -Subject $Subject -Body $Body -SmtpServer "
 
 }
 
-SendAlertEmail "give em the ol'razzle dazzle"
+#SendAlertEmail "give em the ol'razzle dazzle"
 

@@ -1,17 +1,18 @@
-﻿. "C:\Users\champuser\SYS-320-Automating-and-Scripting\week6\Event-Logs.ps1"
+﻿# Dot source the required script files
+. "C:\Users\champuser\SYS-320-Automating-and-Scripting\week7\Event-Logs.ps1"
 . "C:\Users\champuser\SYS-320-Automating-and-Scripting\week7\Email.ps1"
 . "C:\Users\champuser\SYS-320-Automating-and-Scripting\week7\scheduler.ps1"
 . "C:\Users\champuser\SYS-320-Automating-and-Scripting\week7\configuration.ps1"
+. "C:\Users\champuser\SYS-320-Automating-and-Scripting\week7\String-Helper.ps1"
 
-#Obtaining Configuration 
+# Obtaining configuration
+$configuration = readConfiguration
 
-$configuration = Get-Content "C:\Users\champuser\SYS-320-Automating-and-Scripting\week7\configuration.txt"
+# Obtaining at risk users
+$failed = atRiskUsers $configuration.Days
 
-#Obtaining at risk users 
-$Failed = at_risk_users($configuration[0])
+# Sending at risk users as email
+SendAlertEmail ($failed | Format-Table | Out-String)
 
-#Sending at risk users as email
-SendAlertEmail($Failed | Format-Table | Out-String)
-
-#Setting the script to run daily
-ChooseTimeToRun($configuration[1])
+# Setting the script to be run daily
+ChooseTimeToRun $configuration.ExecutionTime
